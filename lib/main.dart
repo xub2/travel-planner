@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl_standalone.dart';
-import 'package:intl/intl.dart';
 import 'input_user_inform.dart';
 
 void main() async {
@@ -19,7 +17,30 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
-      home: const InputUserInform(),
+      home: const SplashPage(), // SplashPage를 시작 페이지로 설정
+    );
+  }
+}
+
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // 버튼 클릭 시 InputUserInform 페이지로 이동
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const InputUserInform()),
+            );
+          },
+          child: const Text("Go to Input User Inform"),
+        ),
+      ),
     );
   }
 }
