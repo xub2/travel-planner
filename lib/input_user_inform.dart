@@ -1,10 +1,8 @@
-// input_user_inform.dart
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'budget_and_style.dart';
 import 'travel_data.dart';
-import 'package:intl/intl_standalone.dart';
 
 class InputUserInform extends StatefulWidget {
   const InputUserInform({super.key});
@@ -14,7 +12,7 @@ class InputUserInform extends StatefulWidget {
 }
 
 class _InputUserInformState extends State<InputUserInform> {
-  final TravelData travelData = TravelData();
+  final TravelData travelData = TravelData(styles: []);
   final TextEditingController _destinationController = TextEditingController();
 
   DateTime _focusedDepartureDay = DateTime.now();
@@ -24,14 +22,45 @@ class _InputUserInformState extends State<InputUserInform> {
 
   bool _isFormCompleted = false;
 
+  // 오류 메시지를 표시하는 함수
+  void showErrorMessage(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('도착 날짜가 출발 날짜보다 이릅니다.'),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  // 날짜를 비교하는 함수
+  void checkDate(BuildContext context) {
+    if (_selectedDepartureDay != null && _selectedArrivalDay != null) {
+      if (_selectedArrivalDay!.isBefore(_selectedDepartureDay!)) {
+        showErrorMessage(context);
+        _isFormCompleted = false; // 날짜가 잘못된 경우 버튼 비활성화
+      } else {
+        _isFormCompleted = true;
+      }
+    } else {
+      _isFormCompleted = false; // 날짜가 선택되지 않았으면 버튼 비활성화
+    }
+  }
+
   void _checkFormCompletion() {
     setState(() {
       travelData.destination = _destinationController.text;
       travelData.departureDate = _selectedDepartureDay;
       travelData.arrivalDate = _selectedArrivalDay;
-      _isFormCompleted = travelData.destination != null &&
-          travelData.departureDate != null &&
-          travelData.arrivalDate != null;
+
+      bool? isDestinationFilled = travelData.destination?.isNotEmpty;
+      bool areDatesSelected = travelData.departureDate != null && travelData.arrivalDate != null;
+
+      // 모든 입력 값이 완료되고 날짜 순서가 올바른지 확인
+      _isFormCompleted = isDestinationFilled! && areDatesSelected;
+
+      // 날짜 순서를 확인하여 버튼 활성화 여부 결정
+      if (_isFormCompleted) {
+        checkDate(context);
+      }
     });
   }
 
@@ -39,7 +68,7 @@ class _InputUserInformState extends State<InputUserInform> {
   void initState() {
     super.initState();
     _destinationController.addListener(_checkFormCompletion);
-    initializeDateFormatting(); // 날짜 형식 초기화
+    initializeDateFormatting();
   }
 
   @override
@@ -113,7 +142,7 @@ class _InputUserInformState extends State<InputUserInform> {
                     ),
                   ),
                   TableCalendar(
-                    locale: 'ko_KR', // 한국어로 설정
+                    locale: 'ko_KR',
                     firstDay: DateTime.now(),
                     lastDay: DateTime(2100),
                     focusedDay: _focusedDepartureDay,
@@ -125,22 +154,22 @@ class _InputUserInformState extends State<InputUserInform> {
                       });
                       _checkFormCompletion();
                     },
-                    calendarFormat: CalendarFormat.month, // 기본 월간 보기로 설정
-                    availableCalendarFormats: {CalendarFormat.month: 'Month'}, // 다른 보기 제거
+                    calendarFormat: CalendarFormat.month,
+                    availableCalendarFormats: {CalendarFormat.month: 'Month'},
                     calendarStyle: CalendarStyle(
                       todayDecoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        shape: BoxShape.circle,
+                        //color: Colors.white70,
+                        //shape: BoxShape.rectangle,
                       ),
                       selectedDecoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.blueAccent,
                         shape: BoxShape.circle,
                       ),
                       defaultTextStyle: const TextStyle(color: Colors.white),
                       weekendTextStyle: const TextStyle(color: Colors.white70),
                     ),
                     headerStyle: HeaderStyle(
-                      formatButtonVisible: false, // format 버튼 숨기기
+                      formatButtonVisible: false,
                       titleCentered: true,
                       titleTextStyle: const TextStyle(color: Colors.white),
                       leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.white),
@@ -175,11 +204,11 @@ class _InputUserInformState extends State<InputUserInform> {
                     availableCalendarFormats: {CalendarFormat.month: 'Month'},
                     calendarStyle: CalendarStyle(
                       todayDecoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        shape: BoxShape.circle,
+                       //color: Colors.white70,
+                        //shape: BoxShape.rectangle,
                       ),
                       selectedDecoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.blueAccent,
                         shape: BoxShape.circle,
                       ),
                       defaultTextStyle: const TextStyle(color: Colors.white),
@@ -205,7 +234,7 @@ class _InputUserInformState extends State<InputUserInform> {
         child: ElevatedButton(
           onPressed: _isFormCompleted
               ? () {
-            //데이터 확인용 출력
+            // 데이터 확인용 출력
             print('Destination: ${travelData.destination}');
             print('Departure Date: ${travelData.departureDate}');
             print('Arrival Date: ${travelData.arrivalDate}');

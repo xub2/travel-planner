@@ -1,4 +1,3 @@
-// budget_and_style.dart
 import 'package:flutter/material.dart';
 import 'main.dart';
 import 'travel_data.dart';
@@ -15,6 +14,9 @@ class BudgetAndStyle extends StatefulWidget {
 class _BudgetAndStyleState extends State<BudgetAndStyle> {
   final TextEditingController _budgetController = TextEditingController();
 
+  // 스타일 리스트
+  final List<String> travelStyles = ["휴식", "휴양" ,"맛집 탐방", "액티비티", "쇼핑", "관광지 탐방", "현지인 체험"];
+
   void _updateTextWithCurrencySymbol(String value) {
     String text = value.replaceAll('₩', '').trim();
     if (text.isNotEmpty) {
@@ -25,13 +27,24 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
     }
   }
 
-  void _saveBudget() {
+  void _saveBudgetAndStyle() {
     String text = _budgetController.text.replaceAll('₩', '').trim();
     widget.travelData.budget = double.tryParse(text) ?? 0;
 
     // 데이터 확인용 출력
     print('Budget: ${widget.travelData.budget}');
+    print('Styles: ${widget.travelData.styles}');
     print('Full Travel Data: ${widget.travelData}');
+  }
+
+  void _toggleStyleSelection(String style) {
+    setState(() {
+      if (widget.travelData.styles.contains(style)) {
+        widget.travelData.removeStyle(style); // 선택 해제 시 제거
+      } else {
+        widget.travelData.addStyle(style); // 선택 시 추가
+      }
+    });
   }
 
   @override
@@ -96,6 +109,39 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
+                  // 구분선 추가
+                  const Divider(color: Colors.white70, thickness: 1.0),
+                  const SizedBox(height: 20.0),
+                  const Text(
+                    "당신의 여행 스타일을 알려주세요",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  // 다중 선택 가능한 스타일 버튼들
+                  Wrap(
+                    spacing: 10.0,
+                    runSpacing: 10.0,
+                    children: travelStyles.map((style) {
+                      return ChoiceChip(
+                        label: Text(style),
+                        labelStyle: TextStyle(
+                          color: widget.travelData.styles.contains(style)
+                              ? Colors.white
+                              : Colors.white,
+                        ),
+                        selected: widget.travelData.styles.contains(style),
+                        onSelected: (isSelected) {
+                          _toggleStyleSelection(style);
+                        },
+                        selectedColor: Colors.blueAccent,
+                        backgroundColor: Colors.grey[800],
+                      );
+                    }).toList(),
+                  ),
                 ],
               ),
             ),
@@ -106,7 +152,7 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         child: ElevatedButton(
           onPressed: () {
-            _saveBudget();
+            _saveBudgetAndStyle();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const MyApp()),
