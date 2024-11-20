@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
 import 'travel_data.dart';
+import 'loading_view.dart';
 
 class BudgetAndStyle extends StatefulWidget {
   final TravelData travelData;
@@ -15,7 +15,7 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
   final TextEditingController _budgetController = TextEditingController();
 
   // 스타일 리스트
-  final List<String> travelStyles = ["휴식", "휴양" ,"맛집 탐방", "액티비티", "쇼핑", "관광지 탐방", "현지인 체험"];
+  final List<String> travelStyles = ["휴식", "휴양", "맛집 탐방", "액티비티", "쇼핑", "관광지 탐방", "현지인 체험"];
 
   void _updateTextWithCurrencySymbol(String value) {
     String text = value.replaceAll('₩', '').trim();
@@ -31,7 +31,7 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
     String text = _budgetController.text.replaceAll('₩', '').trim();
     widget.travelData.budget = double.tryParse(text) ?? 0;
 
-    // 데이터 확인용 출력
+    // Debugging
     print('Budget: ${widget.travelData.budget}');
     print('Styles: ${widget.travelData.styles}');
     print('Full Travel Data: ${widget.travelData}');
@@ -109,7 +109,6 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
-                  // 구분선 추가
                   const Divider(color: Colors.white70, thickness: 1.0),
                   const SizedBox(height: 20.0),
                   const Text(
@@ -121,7 +120,6 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
                     ),
                   ),
                   const SizedBox(height: 10.0),
-                  // 다중 선택 가능한 스타일 버튼들
                   Wrap(
                     spacing: 10.0,
                     runSpacing: 10.0,
@@ -129,9 +127,7 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
                       return ChoiceChip(
                         label: Text(style),
                         labelStyle: TextStyle(
-                          color: widget.travelData.styles.contains(style)
-                              ? Colors.white
-                              : Colors.white,
+                          color: widget.travelData.styles.contains(style) ? Colors.white : Colors.white,
                         ),
                         selected: widget.travelData.styles.contains(style),
                         onSelected: (isSelected) {
@@ -153,9 +149,12 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
         child: ElevatedButton(
           onPressed: () {
             _saveBudgetAndStyle();
+            // 로딩 화면으로 이동
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const MyApp()),
+              MaterialPageRoute(
+                builder: (context) => LoadingView(travelData: widget.travelData),
+              ),
             );
           },
           style: ElevatedButton.styleFrom(
