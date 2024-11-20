@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import '../main.dart';
 import 'travel_data.dart';
 
 class BudgetAndStyle extends StatefulWidget {

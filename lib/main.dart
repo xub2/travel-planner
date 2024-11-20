@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'input_user_inform.dart';
+import 'views/input_user_inform.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
