@@ -30,15 +30,28 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 18, 32, 47),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // 버튼 클릭 시 InputUserInform 페이지로 이동
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const InputUserInform()),
-            );
-          },
-          child: const Text("Go to Input User Inform"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start, // 위쪽으로 정렬
+          children: [
+            const SizedBox(height: 100), // 상단 여백 추가
+            Image.asset(
+              'lib/assets/images/로고.png', // 이미지 경로
+              width: 500, // 이미지 크기 조정
+              height: 500,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // 버튼 클릭 시 InputUserInform 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const InputUserInform()),
+                );
+              },
+              child: const Text("Go to Input User Inform"),
+            ),
+          ],
         ),
       ),
     );
