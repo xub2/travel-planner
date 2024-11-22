@@ -1,4 +1,4 @@
-// 필요는 없지만 혹시 몰라 주석으로 처리
+// 필요는 없지만 혹시 몰라 주석으로 처리해놓기
 /*
 import 'dart:convert';
 import 'package:http/http.dart' as http;
