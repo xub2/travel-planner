@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'travel_data.dart';
 import 'loading_view.dart';
 
@@ -15,20 +16,36 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
   final TextEditingController _budgetController = TextEditingController();
 
   // 스타일 리스트
-  final List<String> travelStyles = ["휴식", "휴양", "맛집 탐방", "액티비티", "쇼핑", "관광지 탐방", "현지인 체험"];
+  final List<String> travelStyles = ["휴식", "맛집 탐방", "레저", "쇼핑", "관광지 탐방"];
+
+  String _formatWithCommasAndCurrency(String value) {
+    // Remove non-digit characters except commas
+    value = value.replaceAll(RegExp(r'[^0-9]'), '');
+    if (value.isEmpty) return '₩';
+
+    // Format the number with commas
+    final formatter = NumberFormat('#,###');
+    return '₩${formatter.format(int.parse(value))}';
+  }
 
   void _updateTextWithCurrencySymbol(String value) {
-    String text = value.replaceAll('₩', '').trim();
+    String text = value.replaceAll(RegExp(r'[^0-9]'), '').trim();
     if (text.isNotEmpty) {
+      String formattedText = _formatWithCommasAndCurrency(text);
       _budgetController.value = TextEditingValue(
-        text: '₩$text',
-        selection: TextSelection.collapsed(offset: text.length + 1),
+        text: formattedText,
+        selection: TextSelection.collapsed(offset: formattedText.length),
+      );
+    } else {
+      _budgetController.value = const TextEditingValue(
+        text: '₩',
+        selection: TextSelection.collapsed(offset: 1),
       );
     }
   }
 
   void _saveBudgetAndStyle() {
-    String text = _budgetController.text.replaceAll('₩', '').trim();
+    String text = _budgetController.text.replaceAll(RegExp(r'[^0-9]'), '').trim();
     widget.travelData.budget = double.tryParse(text) ?? 0;
 
     // Debugging
