@@ -22,11 +22,31 @@ class ResultView extends StatelessWidget {
       body: SingleChildScrollView( // 스크롤 가능하도록 추가
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Text(
-            result,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-            textAlign: TextAlign.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                result.split('\n').first,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                result.split('\n').skip(1).join('\n').replaceAll('**', ''),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
+
         ),
       ),
     );

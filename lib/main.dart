@@ -41,15 +41,28 @@ class SplashPage extends StatelessWidget {
               fit: BoxFit.contain,
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // 버튼 클릭 시 InputUserInform 페이지로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const InputUserInform()),
-                );
-              },
-              child: const Text("Go to Input User Inform"),
+            SizedBox(
+              width: 250, // 버튼의 너비를 명시적으로 설정
+              height: 60, // 버튼의 높이를 명시적으로 설정
+              child: ElevatedButton(
+                onPressed: () {
+                  // 버튼 클릭 시 InputUserInform 페이지로 이동
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const InputUserInform()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  textStyle: const TextStyle(
+                    fontSize: 18, // 텍스트 크기 설정
+                    color: Colors.white, // 텍스트 색상 설정
+                  ),
+                ),
+                child: const Text(
+                  "여행 일정 만들기",
+                  style: TextStyle(color: Colors.white), // 텍스트 색상 설정
+                ),
+              ),
             ),
           ],
         ),

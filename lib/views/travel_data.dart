@@ -55,7 +55,7 @@ class TravelData {
     String budgetString = budget != null ? budget!.toStringAsFixed(0) : "알 수 없음";
     String stylesString = styles.isNotEmpty ? styles.join(", ") : "알 수 없음";
 
-    return "${destination ?? "알 수 없음"}에 $departure 부터 $arrival 까지 여행을 가는데, 내 예산은 $budgetString 원이고, $stylesString 를 고려하여 여행 계획을 만들어줘";
+    return "${destination ?? "알 수 없음"}에 $departure 부터 $arrival 까지 여행을 가는데, 내 예산은 $budgetString 원이고, $stylesString 를 고려하여 여행 계획을 만들어줘.";
   }
 
   @override
