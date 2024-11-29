@@ -26,9 +26,14 @@
 - 예전에 진행했던 챗봇 앱에서 사용한 웹서버 코드를 직접 응용하는 것이 목적
 - 웹 서버와 디바이스 간의 로컬 통신 방법에 대해 학습하는 것이 목적
 
-  ## 📚 Tech Stack
+## 📚 Tech Stack
 
 <img src="https://img.shields.io/badge/dart-3578E5?style=for-the-badge&logo=dart&logoColor=white"/> <img src="https://img.shields.io/badge/python-3178C6?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/Flutter-06B6D4?style=for-the-badge&logo=Flutter&logoColor=white"/> <img src="https://img.shields.io/badge/gemini-5a999f?style=for-the-badge&logo=gemini&logoColor=white"/>
+
+## User 플로우 차트
+<p align="center">
+<img src="https://github.com/user-attachments/assets/0a81f172-0534-45ee-bbd8-2745a1aea73b" alt="flow" width="100%" height="100%">
+</p>
 
 ## 실행 결과
 <table>
