@@ -38,7 +38,7 @@ class LoadingView extends StatelessWidget {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => ResultView(result: response ?? "답변을 얻어오는데 실패했습니다."),
+        builder: (context) => ResultView(result: response ?? "일정을 생성하는데 실패했습니다. \n관리자에게 문의하세요."),
       ),
     );
   }
