@@ -16,14 +16,12 @@ class _BudgetAndStyleState extends State<BudgetAndStyle> {
   final TextEditingController _budgetController = TextEditingController();
 
   // 스타일 리스트
-  final List<String> travelStyles = ["휴식", "맛집 탐방", "레저", "쇼핑", "관광지 탐방"];
+  final List<String> travelStyles = ["휴식", "현지인 인정 맛집 투어", "레저", "쇼핑", "관광지 탐방", "경기 관람", "공연 관람" , "현지 문화 체험" , "카페 탐방"];
 
   String _formatWithCommasAndCurrency(String value) {
-    // Remove non-digit characters except commas
     value = value.replaceAll(RegExp(r'[^0-9]'), '');
     if (value.isEmpty) return '₩';
 
-    // Format the number with commas
     final formatter = NumberFormat('#,###');
     return '₩${formatter.format(int.parse(value))}';
   }
