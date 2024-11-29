@@ -12,7 +12,7 @@ class ResultView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 18, 32, 47), // AppBar 배경 색상을 동일하게 설정
         title: const Text(
-          "당신만을 위한 여행 계획이에요!",
+          "당신만을 위한 여행 계획입니다!",
           style: TextStyle(
             fontWeight: FontWeight.bold, // 텍스트를 볼드체로 설정
           ),

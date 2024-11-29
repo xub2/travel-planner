@@ -20,8 +20,8 @@ class LoadingView extends StatelessWidget {
             CircularProgressIndicator(),
             SizedBox(height: 20),
             Text(
-              "알려주신 정보를 바탕으로 \n"
-                  "여행 정보를 생성하고 있어요!",
+              "입력해 주신 정보를 바탕으로 \n"
+                  "멋진 일정을 만들어 드릴게요🤖",
               style: TextStyle(color: Colors.white, fontSize: 18),
             ),
           ],
